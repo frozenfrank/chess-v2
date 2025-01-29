@@ -1,6 +1,5 @@
 package chess;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
@@ -61,9 +60,7 @@ public class ChessPiece {
             case QUEEN -> marchAll(validMoves, board, myPosition, 8);
             case KING -> marchAll(validMoves, board, myPosition, 1);
             case KNIGHT -> marchKnightMoves(validMoves, board, myPosition);
-            default -> {
-                throw new RuntimeException("Unsupported move type!");
-            }
+            case PAWN -> validMovesPawn(validMoves, board, myPosition);
         }
         return validMoves;
     }
@@ -125,6 +122,47 @@ public class ChessPiece {
             row += rowDelta;
             col += colDelta;
             moveCount++;
+        }
+    }
+
+    private void validMovesPawn(Collection<ChessMove> validMoves, ChessBoard board, ChessPosition origin) {
+        boolean white = pieceColor == ChessGame.TeamColor.WHITE;
+        int homeRow = white ? 2 : 7;
+        int forward = white ? 1 : -1;
+
+        int row = origin.getRow();
+        int col = origin.getColumn();
+
+        pawnAttemptMove(validMoves, board, origin, row + forward, col - 1, true);
+        pawnAttemptMove(validMoves, board, origin, row + forward, col + 1, true);
+        pawnAttemptMove(validMoves, board, origin, row + forward, col, false);
+
+        if (row == homeRow) {
+            pawnAttemptMove(validMoves, board, origin, row + 2 * forward, col, false);
+        }
+    }
+
+    private void pawnAttemptMove(Collection<ChessMove> validMoves, ChessBoard board, ChessPosition origin,
+                                 int endRow, int endCol, boolean attack) {
+        if (endCol < 1 || endCol > 8) {
+            return;
+        }
+
+        ChessPosition end = new ChessPosition(endRow, endCol);
+        var occupant = board.getPiece(end);
+        if (attack && (occupant == null || occupant.getTeamColor() == pieceColor)) {
+            return;
+        } else if (!attack && occupant != null) {
+            return;
+        }
+
+        if (end.getRow() == 1 || end.getRow() == 8) {
+            validMoves.add(new ChessMove(origin, end, PieceType.BISHOP));
+            validMoves.add(new ChessMove(origin, end, PieceType.KNIGHT));
+            validMoves.add(new ChessMove(origin, end, PieceType.ROOK));
+            validMoves.add(new ChessMove(origin, end, PieceType.QUEEN));
+        } else {
+            validMoves.add(new ChessMove(origin, end, null));
         }
     }
 
