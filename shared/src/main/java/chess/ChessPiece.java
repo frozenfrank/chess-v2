@@ -60,6 +60,7 @@ public class ChessPiece {
             case BISHOP -> marchDiagonally(validMoves, board, myPosition, 8);
             case QUEEN -> marchAll(validMoves, board, myPosition, 8);
             case KING -> marchAll(validMoves, board, myPosition, 1);
+            case KNIGHT -> marchKnightMoves(validMoves, board, myPosition);
             default -> {
                 throw new RuntimeException("Unsupported move type!");
             }
@@ -84,6 +85,17 @@ public class ChessPiece {
         marchInDirection(validMoves, board, origin, -1, +1, limit);
         marchInDirection(validMoves, board, origin, +1, -1, limit);
         marchInDirection(validMoves, board, origin, -1, -1, limit);
+    }
+
+    private void marchKnightMoves(Collection<ChessMove> validMoves, ChessBoard board, ChessPosition origin) {
+        int[][] validDirections = {
+                {1, 2}, {1, -2},
+                {2, 1}, {2, -1},
+        };
+        for (var dir : validDirections) {
+            marchInDirection(validMoves, board, origin, dir[0], dir[1], 1);
+            marchInDirection(validMoves, board, origin, -dir[0], dir[1], 1);
+        }
     }
 
     private void marchInDirection(Collection<ChessMove> validMoves, ChessBoard board,
