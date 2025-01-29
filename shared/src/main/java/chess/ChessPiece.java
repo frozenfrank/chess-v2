@@ -135,25 +135,25 @@ public class ChessPiece {
 
         pawnAttemptMove(validMoves, board, origin, row + forward, col - 1, true);
         pawnAttemptMove(validMoves, board, origin, row + forward, col + 1, true);
-        pawnAttemptMove(validMoves, board, origin, row + forward, col, false);
+        var couldAdvance = pawnAttemptMove(validMoves, board, origin, row + forward, col, false);
 
-        if (row == homeRow) {
+        if (row == homeRow && couldAdvance) {
             pawnAttemptMove(validMoves, board, origin, row + 2 * forward, col, false);
         }
     }
 
-    private void pawnAttemptMove(Collection<ChessMove> validMoves, ChessBoard board, ChessPosition origin,
+    private boolean pawnAttemptMove(Collection<ChessMove> validMoves, ChessBoard board, ChessPosition origin,
                                  int endRow, int endCol, boolean attack) {
-        if (endCol < 1 || endCol > 8) {
-            return;
+        if (endCol < 1 || endCol > 8 || endRow < 1 || endRow > 8) {
+            return false;
         }
 
         ChessPosition end = new ChessPosition(endRow, endCol);
         var occupant = board.getPiece(end);
         if (attack && (occupant == null || occupant.getTeamColor() == pieceColor)) {
-            return;
+            return false;
         } else if (!attack && occupant != null) {
-            return;
+            return false;
         }
 
         if (end.getRow() == 1 || end.getRow() == 8) {
@@ -161,8 +161,10 @@ public class ChessPiece {
             validMoves.add(new ChessMove(origin, end, PieceType.KNIGHT));
             validMoves.add(new ChessMove(origin, end, PieceType.ROOK));
             validMoves.add(new ChessMove(origin, end, PieceType.QUEEN));
+            return false;
         } else {
             validMoves.add(new ChessMove(origin, end, null));
+            return true;
         }
     }
 
