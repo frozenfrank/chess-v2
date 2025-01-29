@@ -55,8 +55,8 @@ public class ChessBoard {
         };
         for (int i = 0; i < 8; i++) {
             squares[0][i] = new ChessPiece(ChessGame.TeamColor.WHITE, homeRow[i]);
-            squares[0][i] = new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.PAWN);
-            squares[7][i] = new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.PAWN);
+            squares[1][i] = new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.PAWN);
+            squares[6][i] = new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.PAWN);
             squares[7][i] = new ChessPiece(ChessGame.TeamColor.BLACK, homeRow[i]);
         }
     }
