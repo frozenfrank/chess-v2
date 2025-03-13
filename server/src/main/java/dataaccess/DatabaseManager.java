@@ -58,7 +58,8 @@ public class DatabaseManager {
                     preparedStatement.executeUpdate();
             }
         } catch(SQLException e){
-                throw new DataAccessException(e.getMessage());
+            e.printStackTrace();
+            throw new DataAccessException(e.getMessage());
         }
     }
 
