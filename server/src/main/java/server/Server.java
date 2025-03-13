@@ -9,6 +9,8 @@ import service.GameService;
 import service.UserService;
 import spark.*;
 
+import static dataaccess.DatabaseManager.createDatabase;
+
 public class Server {
     private ClearHandler clearHandler;
     private RegisterHandler registerHandler;
@@ -20,8 +22,14 @@ public class Server {
     private ExceptionHandler exceptionHandler;
 
     public Server() {
-//      DAOs
+//      Server
+        try{
+            createDatabase();
+        }catch(DataAccessException e) {
+            throw new RuntimeException(e.getMessage());
+        }
 
+//      DAOs
         UserDAO users = new SequelUserDAO();
         AuthDAO auths= new SequelAuthDAO();
         GameDAO games= new SequelGameDAO();

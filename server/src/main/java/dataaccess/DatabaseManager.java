@@ -37,7 +37,7 @@ public class DatabaseManager {
     /**
      * Creates the database if it does not already exist.
      */
-    static void createDatabase() throws DataAccessException {
+    public static void createDatabase() throws DataAccessException {
         try (var connOne = DriverManager.getConnection(CONNECTION_URL, USER, PASSWORD)) {
             var statementOne = "CREATE DATABASE IF NOT EXISTS " + DATABASE_NAME;
             // Create the database

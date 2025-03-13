@@ -7,8 +7,6 @@ import model.UserData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static dataaccess.DatabaseManager.createDatabase;
-
 public class SequelAuthDAO implements AuthDAO{
     private static final String createAuthData = "INSERT INTO AuthData (authToken, username) VALUES ( ?, ?);";
 
@@ -16,14 +14,6 @@ public class SequelAuthDAO implements AuthDAO{
 
     private static final String deleteAuth = "DELETE FROM AuthData WHERE authToken = ?;";
 
-
-    public SequelAuthDAO() {
-        try{
-            createDatabase();
-        }catch(DataAccessException e) {
-            throw new RuntimeException(e.getMessage());
-        }
-    }
 
     @Override
     public void clear() throws ExceptionResponse{

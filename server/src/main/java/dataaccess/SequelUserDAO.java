@@ -11,13 +11,6 @@ import static dataaccess.DatabaseManager.*;
 
 
 public class SequelUserDAO implements UserDAO {
-    public SequelUserDAO()  {
-        try {
-            createDatabase();
-        }catch(DataAccessException e){
-            throw new RuntimeException(e);
-        }
-    }
 
     @Override
     public void clear() {

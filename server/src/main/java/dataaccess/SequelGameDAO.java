@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 
-import static dataaccess.DatabaseManager.createDatabase;
-
 public class SequelGameDAO implements GameDAO{
     private int gameID = 1;
     private final String createGame = "INSERT INTO GameData (GameID, GameName, ChessGame) VALUES ( ?, ?, ?);";
@@ -23,14 +21,6 @@ public class SequelGameDAO implements GameDAO{
             SET ? = ?
             WHERE GameID = ?;""";
 
-
-    public SequelGameDAO() {
-        try {
-            createDatabase();
-        }catch (DataAccessException e) {
-            throw new RuntimeException(e.getMessage());
-        }
-    }
 
     @Override
     public void clear() throws ExceptionResponse{
