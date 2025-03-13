@@ -36,7 +36,6 @@ public class SequelUserDAO implements UserDAO {
         UserData user = null;
         String sql = "SELECT username, password, email FROM UserDATA WHERE username = ?;";
         try(var conn = DatabaseManager.getConnection()) {
-            DatabaseManager.useChess();
             try (var stmt = conn.prepareStatement(sql)){
                 stmt.setString(1,usrnm);
                 try (ResultSet rs = stmt.executeQuery()) {
@@ -68,7 +67,6 @@ public class SequelUserDAO implements UserDAO {
 
         String sql = "INSERT INTO UserData (username, password, email) VALUES ( ?, ?, ?);";
         try(var conn = DatabaseManager.getConnection()) {
-            DatabaseManager.useChess();
             try (var stmt = conn.prepareStatement(sql)){
                 stmt.setString(1, username);  // Set username
                 stmt.setString(2, password);  // Set password

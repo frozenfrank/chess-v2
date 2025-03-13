@@ -18,7 +18,6 @@ public abstract class dataaccessSQLAbstractClass {
 
     public boolean checkNumRows(String table_name) throws ExceptionResponse {
         try (var conn = DatabaseManager.getConnection()) {
-            DatabaseManager.useChess();
             String checkNumRowsCommand;
             if (table_name == "AuthData") {
                 checkNumRowsCommand = checkNumRowsCommandAuths;

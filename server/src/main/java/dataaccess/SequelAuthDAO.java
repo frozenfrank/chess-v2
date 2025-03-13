@@ -43,7 +43,6 @@ public class SequelAuthDAO implements AuthDAO{
         String authToken = authData.getAuth();
 
         try(var conn = DatabaseManager.getConnection()) {
-            DatabaseManager.useChess();
             try (var stmt = conn.prepareStatement(createAuthData)){
                 stmt.setString(1, authToken);  // Set username
                 stmt.setString(2, username);  // Set password
@@ -60,7 +59,6 @@ public class SequelAuthDAO implements AuthDAO{
     public AuthData getAuth(String authTkn) throws ExceptionResponse{
         AuthData authData = null;
         try(var conn = DatabaseManager.getConnection()) {
-            DatabaseManager.useChess();
             try (var stmt = conn.prepareStatement(getAuthData)){
                 stmt.setString(1,authTkn);
                 try (ResultSet rs = stmt.executeQuery()) {
@@ -85,7 +83,6 @@ public class SequelAuthDAO implements AuthDAO{
     @Override
     public void deleteAuth(String authToken) throws ExceptionResponse{
         try(var conn = DatabaseManager.getConnection()) {
-            DatabaseManager.useChess();
             try(var stmt = conn.prepareStatement(deleteAuth)){
                 stmt.setString(1,authToken);
                 int rowsDeleted = stmt.executeUpdate();

@@ -63,16 +63,6 @@ public class DatabaseManager {
         }
     }
 
-    public static void useChess() throws DataAccessException {
-        try (var conn = DriverManager.getConnection(CONNECTION_URL, USER, PASSWORD)){
-            try (var preparedStatement = conn.prepareStatement(useChessDatabase)) {
-                preparedStatement.executeUpdate();
-            }
-        } catch(SQLException e){
-            throw new DataAccessException(e.getMessage());
-        }
-    }
-
     private static final String createUserData =
             """
            CREATE TABLE IF NOT EXISTS UserData (
