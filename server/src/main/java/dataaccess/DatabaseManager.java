@@ -44,9 +44,6 @@ public class DatabaseManager {
             try (var preparedStatement = connOne.prepareStatement(statementOne)) {
                 preparedStatement.executeUpdate();
             }
-            try (var preparedStatement = connOne.prepareStatement(useChessDatabase)) {
-                preparedStatement.executeUpdate();
-            }
             createTable(createAuthData);
             createTable(createGameData);
             createTable(createUserData);
@@ -57,9 +54,6 @@ public class DatabaseManager {
 
     static void createTable(String table) throws DataAccessException {
         try (var conn = DriverManager.getConnection(CONNECTION_URL, USER, PASSWORD)){
-            try (var preparedStatement = conn.prepareStatement(useChessDatabase)) {
-                preparedStatement.executeUpdate();
-            }
             try (var preparedStatement = conn.prepareStatement(table)) {
                     preparedStatement.executeUpdate();
             }
@@ -107,7 +101,6 @@ public class DatabaseManager {
               PRIMARY KEY (`authToken`)
             )
             """;
-    private static final String useChessDatabase = "USE chess;";
     /**
      * Create a connection to the database and sets the catalog based upon the
      * properties specified in db.properties. Connections to the database should
