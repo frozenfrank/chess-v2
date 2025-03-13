@@ -53,7 +53,7 @@ public class DatabaseManager {
     }
 
     static void createTable(String table) throws DataAccessException {
-        try (var conn = DriverManager.getConnection(CONNECTION_URL, USER, PASSWORD)){
+        try (var conn = DatabaseManager.getConnection()){
             try (var preparedStatement = conn.prepareStatement(table)) {
                     preparedStatement.executeUpdate();
             }
