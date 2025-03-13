@@ -21,7 +21,7 @@ public class SEQUELAuthDAOTests extends dataaccessSQLAbstractClass {
         try {
             auths.createAuth(newAuth);
             auths.clear();
-            assertTrue(checkNumRows("AuthData"));
+            assertEquals(0,checkNumRows("AuthData"));
         } catch (ExceptionResponse e) {
             System.out.println("Thrown exception: " + e.getMessage());
         }
@@ -111,7 +111,7 @@ public class SEQUELAuthDAOTests extends dataaccessSQLAbstractClass {
            auths.clear();
            auths.createAuth(authData1);
            auths.deleteAuth(authToken1);
-           assertTrue(checkNumRows("AuthData"));
+           assertEquals(0,checkNumRows("AuthData"));
        } catch (ExceptionResponse e) {
            System.out.println("Thrown exception: " + e.getMessage());
        }

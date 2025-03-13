@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 
 public class SequelGameDAO implements GameDAO{
@@ -40,6 +41,10 @@ public class SequelGameDAO implements GameDAO{
         var serializer = new Gson();
         var gameJSON = serializer.toJson(game);
         int currentGameID = gameID;
+
+        if(Objects.equals(gameName, "")) {
+            throw new ExceptionResponse(400, "Error: bad request");
+        }
         try(var conn = DatabaseManager.getConnection()) {
             try (var stmt = conn.prepareStatement(createGame)){
                 stmt.setInt(1, currentGameID);  // Set username

@@ -18,7 +18,7 @@ public class SEQUELUserDAOTests extends dataaccessSQLAbstractClass{
 
         users.clear();
         try {
-            assertTrue(checkNumRows("UserData"));
+            assertEquals(0,checkNumRows("UserData"));
         } catch (ExceptionResponse e) {
             System.out.println("Thrown exception: " + e.getMessage());
         }
